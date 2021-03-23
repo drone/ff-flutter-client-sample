@@ -6,7 +6,8 @@ enum FeatureType {
   Verification,
   Integration,
   Features,
-  Efficiency
+  Efficiency,
+  Help
 }
 
 abstract class FeatureCard{
@@ -25,6 +26,46 @@ abstract class FeatureCard{
   bool available;
   bool hasRibbon;
   bool enabledDarkMode;
+  bool isHelpEnabled;
+}
+
+class NeedHelp extends FeatureCard {
+  @override
+
+  NeedHelp() {
+    this.featureImageName   = 'assets/images/cd.png';
+    this.featureDescription = '';
+    this.featureTrialPeriod = 0;
+    this.enabled            = false;
+    this.available          = false;
+    this.hasRibbon          = false;
+    this.isHelpEnabled      = false;
+    this.featureType        = FeatureType.Help;
+    this.enabledDarkMode    = false;
+  }
+
+  @override
+  String getFeatureNameImage() {
+    return '';
+  }
+
+  @override
+  void setAvailable(bool value) {
+  }
+
+  @override
+  void setDarkMode(bool value) {
+    this.enabledDarkMode = value;
+  }
+
+  @override
+  void setEnabled(bool value) {
+  }
+
+  @override
+  void setRibbon(bool value) {
+  }
+
 }
 
 class CDModule extends FeatureCard {
@@ -38,10 +79,12 @@ class CDModule extends FeatureCard {
     this.available          = false;
     this.hasRibbon          = false;
     this.enabledDarkMode    = false;
+    this.isHelpEnabled      = false;
   }
   @override
   void setDarkMode(bool value) {
-   this.featureImageName = value ? 'assets/images/cd_dark.png' : 'assets/images/cd.png';
+    this.enabledDarkMode = value;
+    this.featureImageName = value ? 'assets/images/cd_dark.png' : 'assets/images/cd.png';
   }
   @override
   String getFeatureNameImage() {
@@ -75,9 +118,11 @@ class CVModule extends FeatureCard {
     this.available             = false;
     this.hasRibbon             = false;
     this.enabledDarkMode       = false;
+    this.isHelpEnabled         = false;
   }
   @override
   void setDarkMode(bool value) {
+    this.enabledDarkMode = value;
     this.featureImageName = value ? 'assets/images/cv_dark.png' : 'assets/images/cv.png';
   }
 
@@ -113,10 +158,12 @@ class CIModule extends FeatureCard {
     this.available          = false;
     this.hasRibbon          = false;
     this.enabledDarkMode    = false;
+    this.isHelpEnabled      = false;
   }
 
   @override
   void setDarkMode(bool value) {
+    this.enabledDarkMode = value;
     this.featureImageName = value ? 'assets/images/ci_dark.png' : 'assets/images/ci.png';
   }
 
@@ -151,10 +198,12 @@ class CEModule extends FeatureCard {
     this.available          = false;
     this.hasRibbon          = false;
     this.enabledDarkMode    = false;
+    this.isHelpEnabled      = false;
   }
 
   @override
   void setDarkMode(bool value) {
+    this.enabledDarkMode = value;
     this.featureImageName = value ? 'assets/images/ce_dark.png' : 'assets/images/ce.png';
   }
 
@@ -187,10 +236,12 @@ class CFModule extends FeatureCard {
     this.available          = false;
     this.hasRibbon          = false;
     this.enabledDarkMode    = false;
+    this.isHelpEnabled      = false;
   }
 
   @override
   void setDarkMode(bool value) {
+    this.enabledDarkMode = value;
     this.featureImageName = value ? 'assets/images/cf_dark.png' : 'assets/images/cf.png';
   }
 

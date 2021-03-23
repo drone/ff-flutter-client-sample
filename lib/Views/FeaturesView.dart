@@ -3,7 +3,6 @@ import 'dart:ui';
 import 'FeatureListItem.dart';
 import 'FeatureType.dart';
 import 'package:ff_flutter_client_sdk/CfClient.dart';
-import 'package:flutter/material.dart';
 
 
 class FeatureView extends StatelessWidget {
@@ -30,7 +29,7 @@ class FeatureView extends StatelessWidget {
   }
 
   _destroyTapped() {
-
+      CfClient.destroy();
   }
 }
 
@@ -44,9 +43,10 @@ class FeaturesGrid extends StatefulWidget {
 
 class _FeaturesGrid extends State<FeaturesGrid> {
 
-  List<FeatureCard> features = [CVModule(), CIModule(), CEModule(), CFModule()];
+  List<FeatureCard> features = [CVModule(),NeedHelp(), CIModule(), CEModule(), CFModule()];
 
   bool  _enabledDarkMode = false;
+  Function _eventListener;
 
   dynamic requestedValue;
 
@@ -81,11 +81,13 @@ class _FeaturesGrid extends State<FeaturesGrid> {
   @override
   void dispose() {
     super.dispose();
+    CfClient.unregisterEventsListener(_eventListener);
     CfClient.destroy();
   }
 
   _registerForEvents() {
     CfClient.registerEventsListener((evaluationMap, eventType) {
+      _eventListener = (evaluationMap, eventType){};
       switch (eventType) {
         case EventType.START:
           print("Started SSE");
@@ -138,68 +140,67 @@ class _FeaturesGrid extends State<FeaturesGrid> {
       }
     }
 
-    void fetchBooleansFromCache(String flag) {
-      switch (flag) {
-        case "harnessappdemoenableglobalhelp":
-          CfClient.boolVariation(flag, false).then((value) {
-            String globalHelp = (value) ? "ON" : "OFF";
-            setState(() {
-              print("CACHE: Global Help => $value");
-            });
+  void fetchBooleansFromCache(String flag) {
+    switch (flag) {
+      case "harnessappdemoenableglobalhelp":
+        CfClient.boolVariation(flag, false).then((value) {
+          setState(() {
+            print("CACHE: Global Help => $value");
+            features.forEach((element) { if (element.featureType == FeatureType.Help) { element.isHelpEnabled = value; }});
           });
-          break;
-        case "harnessappdemoenablecvmodule":
-          CfClient.boolVariation(flag, false).then((value) {
-            String cvModule = (value) ? "ON" : "OFF";
-            setState(() {
-              print("CACHE: CV Module => $value");
-            });
+        });
+        break;
+      case "harnessappdemoenablecvmodule":
+        CfClient.boolVariation(flag, false).then((value) {
+          setState(() {
+            print("CACHE: CV Module => $value");
+            features.forEach((element) { if (element.featureType == FeatureType.Verification) { element.setAvailable(value); }});
           });
-          break;
-        case "harnessappdemoenablecimodule":
-          CfClient.boolVariation(flag, false).then((value) {
-            String ciModule = (value) ? "ON" : "OFF";
-            setState(() {
-              print("CACHE: CI Module => $value");
-            });
+        });
+        break;
+      case "harnessappdemoenablecimodule":
+        CfClient.boolVariation(flag, false).then((value) {
+          setState(() {
+            print("CACHE: CI Module => $value");
+            features.forEach((element) { if (element.featureType == FeatureType.Integration) { element.setAvailable(value); }});
           });
-          break;
-        case "harnessappdemoenablecfmodule":
-          CfClient.boolVariation(flag, false).then((value) {
-            String cfModule = (value) ? "ON" : "OFF";
-            setState(() {
-              print("CACHE: CF Module => $value");
-            });
+        });
+        break;
+      case "harnessappdemoenablecfmodule":
+        CfClient.boolVariation(flag, false).then((value) {
+          setState(() {
+            print("CACHE: CF Module => $value");
+            features.forEach((element) { if (element.featureType == FeatureType.Features) { element.setAvailable(value); }});
           });
-          break;
-        case "harnessappdemoenablecemodule":
-          CfClient.boolVariation(flag, false).then((value) {
-            String ceModule = (value) ? "ON" : "OFF";
-            setState(() {
-              print("CACHE: CE Module => $value");
-            });
+        });
+        break;
+      case "harnessappdemoenablecemodule":
+        CfClient.boolVariation(flag, false).then((value) {
+          setState(() {
+            print("CACHE: CE Module => $value");
+            features.forEach((element) { if (element.featureType == FeatureType.Efficiency) { element.setAvailable(value); }});
           });
-          break;
-        case "harnessappdemodarkmode":
-          CfClient.boolVariation(flag, false).then((value) {
-            String darkMode = (value) ? "ON" : "OFF";
-            setState(() {
-              print("CACHE: Dark Mode => $value");
-              features.forEach((element) { element.enabledDarkMode = value; });
-              _enabledDarkMode = value;
-            });
+        });
+        break;
+      case "harnessappdemodarkmode":
+        CfClient.boolVariation(flag, false).then((value) {
+          setState(() {
+            print("CACHE: Dark Mode => $value");
+            features.forEach((element) { element.setDarkMode(value); });
+            _enabledDarkMode = value;
           });
-          break;
-        case "harnessappdemocfribbon":
-          CfClient.boolVariation(flag, false).then((value) {
-            String cfRibbon = (value) ? "ON" : "OFF";
-            setState(() {
-              print("CACHE: CF Ribbon => $value");
-            });
+        });
+        break;
+      case "harnessappdemocfribbon":
+        CfClient.boolVariation(flag, false).then((value) {
+          setState(() {
+            print("CACHE: CF Ribbon => $value");
+            features.forEach((element) { if (element.featureType == FeatureType.Features) { element.setRibbon(value); }});
           });
-          break;
-      }
+        });
+        break;
     }
+  }
 
     void fetchNumbersFromCache(String flag) {
       switch (flag) {
@@ -290,6 +291,7 @@ class _FeaturesGrid extends State<FeaturesGrid> {
         case "harnessappdemoenableglobalhelp":
           String globalHelp = (value) ? "ON" : "OFF";
           setState(() {
+            features.forEach((element) { if (element.featureType == FeatureType.Help) { element.isHelpEnabled = value; }});
             print("Set Global Help => $value");
           });
           break;
@@ -326,7 +328,8 @@ class _FeaturesGrid extends State<FeaturesGrid> {
           String darkMode = (value) ? "ON" : "OFF";
           setState(() {
             print("Set Dark Mode => $value");
-            features.forEach((element) {  element.setDarkMode(value); });
+            features.forEach((element) { element.setDarkMode(value); });
+            _enabledDarkMode = value;
           });
           break;
         case "harnessappdemocfribbon":
