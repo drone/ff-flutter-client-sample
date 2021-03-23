@@ -294,7 +294,7 @@
     Future<bool> selectedAccount(String name) async {
       var conf = CfConfigurationBuilder()
           .setStreamEnabled(true)
-          .setPollingInterval(20)
+          .setPollingInterval(60)
           .build();
       var target = CfTargetBuilder().setIdentifier(name).build();
 
