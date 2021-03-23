@@ -1,0 +1,29 @@
+PODS:
+  - ff-ios-client-sdk (0.0.3)
+  - ff_flutter_client_sdk (0.0.1):
+    - ff-ios-client-sdk
+    - Flutter
+  - Flutter (1.0.0)
+
+DEPENDENCIES:
+  - ff_flutter_client_sdk (from `.symlinks/plugins/ff_flutter_client_sdk/ios`)
+  - Flutter (from `Flutter`)
+
+SPEC REPOS:
+  trunk:
+    - ff-ios-client-sdk
+
+EXTERNAL SOURCES:
+  ff_flutter_client_sdk:
+    :path: ".symlinks/plugins/ff_flutter_client_sdk/ios"
+  Flutter:
+    :path: Flutter
+
+SPEC CHECKSUMS:
+  ff-ios-client-sdk: 839eb17ce178993f12a5ab3fe3d194815e96ee34
+  ff_flutter_client_sdk: eabf6ab4c1fb82e050c511bfade594c3b5631e41
+  Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
+
+PODFILE CHECKSUM: fe0e1ee7f3d1f7d00b11b474b62dd62134535aea
+
+COCOAPODS: 1.10.1
