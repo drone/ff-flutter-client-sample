@@ -82,6 +82,7 @@ class _FeaturesGrid extends State<FeaturesGrid> {
   void dispose() {
     super.dispose();
     CfClient.unregisterEventsListener(_eventListener);
+    CfClient.destroy();
   }
 
   _registerForEvents() {
