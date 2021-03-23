@@ -7,23 +7,32 @@ class _NeedHelpView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(child: Transform.rotate(
+    return Center(
+
+        child: Stack(
+          children:[
+            Positioned(
+                top:  100 ,
+                right: -50,
+                child:
+            Transform.rotate(
       angle:  -pi/2,
       child: Container(
-        decoration: BoxDecoration(
-            color: Colors.green,
-            border: Border.all(color: Colors.white,
-            ),
-            borderRadius: BorderRadius.all(Radius.circular(20)
-            )
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(15.0),
-          child: Text("Need help ? 👋",
-              style: TextStyle(color: Colors.white, fontSize: 22.0)),
-        ),
+          decoration: BoxDecoration(
+              color: Colors.green,
+              border: Border.all(color: Colors.white,
+              ),
+              borderRadius: BorderRadius.all(Radius.circular(20)
+              )
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: Text("Need help ? 👋",
+                style: TextStyle(color: Colors.white, fontSize: 22.0)),
+          ),
       ),
-    )
+    ))
+            ])
     );
   }
 }
