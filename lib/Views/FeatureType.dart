@@ -33,9 +33,9 @@ class CDModule extends FeatureCard {
     this.featureImageName   = 'assets/images/cd.png';
     this.featureType        = FeatureType.Delivery;
     this.featureDescription = '';
-    this.featureTrialPeriod = 0;
+    this.featureTrialPeriod = -1;
     this.enabled            = false;
-    this.available          = false;
+    this.available          = true;
     this.hasRibbon          = false;
     this.enabledDarkMode    = false;
   }
