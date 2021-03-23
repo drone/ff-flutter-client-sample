@@ -62,7 +62,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "7037b271da9b619874f78debb3d59f48a8d142a8"
+      resolved-ref: "9c805ae1a55bd49dc0c1e3f6b6e2ddd4c0ddac97"
       url: "https://github.com/tanovicstef92/ff-flutter-client-sdk.git"
     source: git
     version: "0.0.1"
