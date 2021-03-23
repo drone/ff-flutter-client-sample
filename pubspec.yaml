@@ -32,7 +32,7 @@ dependencies:
 
 dev_dependencies:
   ff_flutter_client_sdk:
-    path: ../ff-flutter-client-sdk
+    git: 'https://github.com/tanovicstef92/ff-flutter-client-sdk.git'
   flutter_test:
     sdk: flutter
 
