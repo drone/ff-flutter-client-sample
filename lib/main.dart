@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import 'dart:async';
-import 'package:flutter/services.dart';
-import 'package:ff_flutter_client_sdk/CfClient.dart';
-
-import 'Views/HomePage.dart';
+import 'package:ff_flutter_client_sample/Views/HomePage.dart';
 
 void main() {
   runApp(App());

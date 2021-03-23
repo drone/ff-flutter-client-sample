@@ -7,7 +7,7 @@
 
 
 
-  class HomePage extends StatefulWidget {
+  class HomePage extends StatefulWidget{
 
     HomePage({Key key, this.title}) : super(key: key);
     final String title;
@@ -294,7 +294,7 @@
     Future<bool> selectedAccount(String name) async {
       var conf = CfConfigurationBuilder()
           .setStreamEnabled(true)
-          .setPollingInterval(60)
+          .setPollingInterval(20)
           .build();
       var target = CfTargetBuilder().setIdentifier(name).build();
 
