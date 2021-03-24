@@ -93,14 +93,15 @@ class _FeatureListItem extends State<FetureListItem> {
                 child: Align(
                     alignment: Alignment.bottomCenter,
                     child:
-                    Row(
-                      children: [
-                      card.featureTrialPeriod >= 0 ? Padding(
+                    FittedBox(child: 
+                      Row(
+                        children: [
+                        card.featureTrialPeriod >= 0 ? Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(card.featureTrialPeriod.toString() +
                                 ' - Day Trial', style: style),
                           ) : Container(),
-                      card.featureTrialPeriod >= 0 ? TextButton(
+                            TextButton(
                               style: TextButton.styleFrom(
                                 shape: BeveledRectangleBorder(
                                     borderRadius: BorderRadius.all(
@@ -116,8 +117,10 @@ class _FeatureListItem extends State<FetureListItem> {
                               onPressed: () {
                                 print('something something');
                               }
-                              , child: Text('Enable')) : Container()
-                      ],)),
+                              , child: Text('Enable'))
+                      ],)
+                    )
+                  ),
               ),
             ],
             ),

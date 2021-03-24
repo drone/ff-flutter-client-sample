@@ -89,10 +89,10 @@ class _FeaturesGrid extends State<FeaturesGrid> {
     CfClient.registerEventsListener((evaluationMap, eventType) {
       _eventListener = (evaluationMap, eventType){};
       switch (eventType) {
-        case EventType.START:
+        case EventType.SSE_START:
           print("Started SSE");
           break;
-        case EventType.END:
+        case EventType.SSE_END:
           print("SSE Completed");
           break;
         case EventType.EVALUATION_CHANGE:
