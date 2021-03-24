@@ -111,6 +111,24 @@ class _FeaturesGrid extends State<FeaturesGrid> {
           break;
       }
     });
+    parseEvaluationFlagFromCache("harnessappdemoenableglobalhelp");
+    parseEvaluationFlagFromCache("harnessappdemodarkmode");
+    parseEvaluationFlagFromCache("harnessappdemoenablecvmodule");
+    parseEvaluationFlagFromCache("harnessappdemoenablecimodule");
+    parseEvaluationFlagFromCache("harnessappdemoenablecfmodule");
+    parseEvaluationFlagFromCache("harnessappdemoenablecemodule");
+    parseEvaluationFlagFromCache("harnessappdemocfribbon");
+    parseEvaluationFlagFromCache("harnessappdemocvtriallimit");
+    parseEvaluationFlagFromCache("harnessappdemocitriallimit");
+    parseEvaluationFlagFromCache("harnessappdemocftriallimit");
+    parseEvaluationFlagFromCache("harnessappdemocetriallimit");
+  }
+
+  void _display(FeatureType featureType, bool value) {
+    features.forEach((element) { if (element.featureType == featureType) { element.setAvailable(value); }});
+  }
+  void _limit(FeatureType featureType, int value) {
+    features.forEach((element) { if (element.featureType == featureType) { element.featureTrialPeriod = value; }});
   }
 
         void parseEvaluationFlagFromCache(String flag) {
@@ -154,7 +172,7 @@ class _FeaturesGrid extends State<FeaturesGrid> {
         CfClient.boolVariation(flag, false).then((value) {
           setState(() {
             print("CACHE: CV Module => $value");
-            features.forEach((element) { if (element.featureType == FeatureType.Verification) { element.setAvailable(value); }});
+            _display(FeatureType.Verification, value);
           });
         });
         break;
@@ -162,7 +180,7 @@ class _FeaturesGrid extends State<FeaturesGrid> {
         CfClient.boolVariation(flag, false).then((value) {
           setState(() {
             print("CACHE: CI Module => $value");
-            features.forEach((element) { if (element.featureType == FeatureType.Integration) { element.setAvailable(value); }});
+            _display(FeatureType.Integration, value);
           });
         });
         break;
@@ -170,7 +188,7 @@ class _FeaturesGrid extends State<FeaturesGrid> {
         CfClient.boolVariation(flag, false).then((value) {
           setState(() {
             print("CACHE: CF Module => $value");
-            features.forEach((element) { if (element.featureType == FeatureType.Features) { element.setAvailable(value); }});
+            _display(FeatureType.Features, value);
           });
         });
         break;
@@ -178,7 +196,7 @@ class _FeaturesGrid extends State<FeaturesGrid> {
         CfClient.boolVariation(flag, false).then((value) {
           setState(() {
             print("CACHE: CE Module => $value");
-            features.forEach((element) { if (element.featureType == FeatureType.Efficiency) { element.setAvailable(value); }});
+            _display(FeatureType.Efficiency, value);
           });
         });
         break;
@@ -209,6 +227,7 @@ class _FeaturesGrid extends State<FeaturesGrid> {
             int cvTrial = value.toInt();
             setState(() {
               print("CACHE: CV Trial => $value");
+              _limit(FeatureType.Verification, value.toInt());
             });
           });
           break;
@@ -217,6 +236,7 @@ class _FeaturesGrid extends State<FeaturesGrid> {
             int ciTrial = value.toInt();
             setState(() {
               print("CACHE: CI Trial => $value");
+              _limit(FeatureType.Integration, value.toInt());
             });
           });
           break;
@@ -225,6 +245,7 @@ class _FeaturesGrid extends State<FeaturesGrid> {
             int cfTrial = value.toInt();
             setState(() {
               print("CACHE: CF Trial => $value");
+              _limit(FeatureType.Features, value.toInt());
             });
           });
           break;
@@ -233,6 +254,7 @@ class _FeaturesGrid extends State<FeaturesGrid> {
             int ceTrial = value.toInt();
             setState(() {
               print("CACHE: CE Trial => $value");
+              _limit(FeatureType.Efficiency, value.toInt());
             });
           });
           break;
@@ -289,43 +311,36 @@ class _FeaturesGrid extends State<FeaturesGrid> {
     void processBooleans(String flag, bool value) {
       switch (flag) {
         case "harnessappdemoenableglobalhelp":
-          String globalHelp = (value) ? "ON" : "OFF";
           setState(() {
             features.forEach((element) { if (element.featureType == FeatureType.Help) { element.isHelpEnabled = value; }});
             print("Set Global Help => $value");
           });
           break;
         case "harnessappdemoenablecvmodule":
-          String cvModule = (value) ? "ON" : "OFF";
           setState(() {
             print("Set CV Module => $value");
-            features.forEach((element) { if (element.featureType == FeatureType.Verification) { element.setAvailable(value); }});
+            _display(FeatureType.Verification, value);
           });
           break;
         case "harnessappdemoenablecimodule":
-          String ciModule = (value) ? "ON" : "OFF";
           setState(() {
             print("Set CI Module => $value");
-            features.forEach((element) { if (element.featureType == FeatureType.Integration) { element.setAvailable(value); }});
+            _display(FeatureType.Integration, value);
           });
           break;
         case "harnessappdemoenablecfmodule":
-          String cfModule = (value) ? "ON" : "OFF";
           setState(() {
             print("Set CF Module => $value");
-            features.forEach((element) { if (element.featureType == FeatureType.Features) { element.setAvailable(value); }});
+            _display(FeatureType.Features, value);
           });
           break;
         case "harnessappdemoenablecemodule":
-          String ceModule = (value) ? "ON" : "OFF";
           setState(() {
             print("Set CE Module => $value");
-            features.forEach((element) { if (element.featureType == FeatureType.Efficiency) { element.setAvailable(value); }});
+            _display(FeatureType.Efficiency, value);
           });
           break;
         case "harnessappdemodarkmode":
-
-          String darkMode = (value) ? "ON" : "OFF";
           setState(() {
             print("Set Dark Mode => $value");
             features.forEach((element) { element.setDarkMode(value); });
@@ -333,7 +348,6 @@ class _FeaturesGrid extends State<FeaturesGrid> {
           });
           break;
         case "harnessappdemocfribbon":
-          String cfRibbon = (value) ? "ON" : "OFF";
           setState(() {
             features.forEach((element) { if (element.featureType == FeatureType.Features) { element.setRibbon(value); }});
             print("Set CF Ribbon => $value");
@@ -347,24 +361,24 @@ class _FeaturesGrid extends State<FeaturesGrid> {
         case "harnessappdemocvtriallimit":
           setState(() {
             print("Set CV Trial => $value");
-            features.forEach((element) { if (element.featureType == FeatureType.Verification) { element.featureTrialPeriod = value; }});
+            _limit(FeatureType.Verification, value);
           });
           break;
         case "harnessappdemocitriallimit":
           setState(() {
             print("Set CI Trial => $value");
-            features.forEach((element) { if (element.featureType == FeatureType.Integration) { element.featureTrialPeriod = value; }});
+            _limit(FeatureType.Integration, value);
           });
           break;
         case "harnessappdemocftriallimit":
           setState(() {
             print("Set CF Trial => $value");
-            features.forEach((element) { if (element.featureType == FeatureType.Features) { element.featureTrialPeriod = value; }});
+            _limit(FeatureType.Features, value);
           });
           break;
         case "harnessappdemocetriallimit":
           setState(() {
-            features.forEach((element) { if (element.featureType == FeatureType.Efficiency) { element.featureTrialPeriod = value; }});
+            _limit(FeatureType.Efficiency, value);
             print("Set CE Trial => $value");
           });
           break;
