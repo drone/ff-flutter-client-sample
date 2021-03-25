@@ -95,30 +95,7 @@ class _FeatureListItem extends State<FetureListItem> {
                     child:
                     FittedBox(child: 
                       Row(
-                        children: [
-                        card.featureTrialPeriod >= 0 ? Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(card.featureTrialPeriod.toString() +
-                                ' - Day Trial', style: style),
-                          ) : Container(),
-                            TextButton(
-                              style: TextButton.styleFrom(
-                                shape: BeveledRectangleBorder(
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(5))
-                                ),
-                                shadowColor: card.enabledDarkMode
-                                    ? Colors.white
-                                    : Colors.black,
-                                backgroundColor: card.enabledDarkMode ? Colors
-                                    .black : Colors.white,
-                                elevation: 5,
-                              ),
-                              onPressed: () {
-                                print('something something');
-                              }
-                              , child: Text('Enable'))
-                      ],)
+                        children: bottomRows(style),)
                     )
                   ),
               ),
@@ -141,6 +118,35 @@ class _FeatureListItem extends State<FetureListItem> {
           shadowColor: card.enabledDarkMode ? Colors.white : Colors.black
       ),
     );
+  }
+
+
+  List<Widget> bottomRows(TextStyle style) {
+    if (card.featureTrialPeriod >= 0) {
+     return [ Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Text(card.featureTrialPeriod.toString() +
+            ' - Day Trial', style: style),
+      ),
+       TextButton(
+             style: TextButton.styleFrom(
+             shape: BeveledRectangleBorder(
+            borderRadius: BorderRadius.all(
+             Radius.circular(5))
+             ),
+             shadowColor: card.enabledDarkMode
+              ? Colors.white : Colors.black,
+    backgroundColor: card.enabledDarkMode ? Colors
+        .black : Colors.white,
+    elevation: 5,
+    ),
+    onPressed: () {
+    print('something something');
+    }
+    , child: Text('Enable'))];
+    } else {
+      return [Padding(padding: EdgeInsets.all(10.0))];
+    }
   }
 }
 
