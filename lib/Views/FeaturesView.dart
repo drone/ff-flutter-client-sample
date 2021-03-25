@@ -5,6 +5,7 @@ import 'FeatureType.dart';
 import 'package:ff_flutter_client_sdk/CfClient.dart';
 
 
+// ignore: must_be_immutable
 class FeatureView extends StatelessWidget {
 
   String title;
@@ -47,10 +48,6 @@ class _FeaturesGrid extends State<FeaturesGrid> {
 
   bool  _enabledDarkMode = false;
   Function _eventListener;
-
-  dynamic requestedValue;
-
-  Map<dynamic, dynamic> _multivar = new Map();
 
 
   @override
@@ -149,10 +146,8 @@ class _FeaturesGrid extends State<FeaturesGrid> {
           fetchNumbersFromCache(flag);
           break;
         case "testmultivar_flag":
-          fetchJsonsFromCache(flag);
           break;
         case "test0223":
-          fetchStringsFromCache(flag);
           break;
         default: break;
       }
@@ -224,7 +219,6 @@ class _FeaturesGrid extends State<FeaturesGrid> {
       switch (flag) {
         case "harnessappdemocvtriallimit":
           CfClient.numberVariation(flag, 0.0).then((value) {
-            int cvTrial = value.toInt();
             setState(() {
               print("CACHE: CV Trial => $value");
               _limit(FeatureType.Verification, value.toInt());
@@ -233,7 +227,6 @@ class _FeaturesGrid extends State<FeaturesGrid> {
           break;
         case "harnessappdemocitriallimit":
           CfClient.numberVariation(flag, 0.0).then((value) {
-            int ciTrial = value.toInt();
             setState(() {
               print("CACHE: CI Trial => $value");
               _limit(FeatureType.Integration, value.toInt());
@@ -242,7 +235,6 @@ class _FeaturesGrid extends State<FeaturesGrid> {
           break;
         case "harnessappdemocftriallimit":
           CfClient.numberVariation(flag, 0.0).then((value) {
-            int cfTrial = value.toInt();
             setState(() {
               print("CACHE: CF Trial => $value");
               _limit(FeatureType.Features, value.toInt());
@@ -251,7 +243,6 @@ class _FeaturesGrid extends State<FeaturesGrid> {
           break;
         case "harnessappdemocetriallimit":
           CfClient.numberVariation(flag, 0.0).then((value) {
-            int ceTrial = value.toInt();
             setState(() {
               print("CACHE: CE Trial => $value");
               _limit(FeatureType.Efficiency, value.toInt());
@@ -261,35 +252,10 @@ class _FeaturesGrid extends State<FeaturesGrid> {
       }
     }
 
-    void fetchJsonsFromCache(String flag) {
-      switch (flag) {
-        case "testmultivar_flag":
-          CfClient.jsonVariation(flag, {"dummyFlag":"dummyValue"}).then((value){
-            setState(() {
-              _multivar = value;
-              requestedValue = value;
-              print("CACHE: Multivar => $value");
-            });
-          });
-      }
-    }
-
-    void fetchStringsFromCache(String flag) {
-      CfClient.stringVariation(flag, "").then((value) {
-        setState(() {
-          requestedValue = value;
-          print("CACHE: Some String => $value");
-        });
-      });
-    }
-
     void parseEvaluationFlag(String flag, dynamic value) {
       if (value is String) {
         List components = value.split(":");
         if (components.length > 1) {
-          String key = components[0];
-          dynamic value = components[1];
-          processJsons(flag, {key:value});
         } else {
           processStrings(flag, value);
         }
@@ -384,15 +350,4 @@ class _FeaturesGrid extends State<FeaturesGrid> {
           break;
       }
     }
-
-    void processJsons(String flag, dynamic value) {
-      switch (flag) {
-        case "testmultivar_flag":
-          setState(() {
-            _multivar = value;
-            print("Set Multivar => $value");
-          });
-          break;
-      }
-    }
-  }
+ }
