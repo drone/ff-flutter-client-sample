@@ -18,7 +18,7 @@ class FeatureView extends StatelessWidget {
       appBar: AppBar(
       title: Text('$title'),
         actions: [
-          TextButton(onPressed: () { this._destroyTapped(); },
+          TextButton(onPressed: () { this._destroyTapped(context); },
               child: Text('Destroy',
                   style: TextStyle(color: Colors.white,
                       fontWeight: FontWeight.bold))
@@ -29,8 +29,9 @@ class FeatureView extends StatelessWidget {
     );
   }
 
-  _destroyTapped() {
+  _destroyTapped(BuildContext context) {
       CfClient.destroy();
+      Navigator.pop(context);
   }
 }
 
