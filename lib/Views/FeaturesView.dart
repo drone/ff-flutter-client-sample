@@ -94,17 +94,17 @@ class _FeaturesGrid extends State<FeaturesGrid> {
           print("SSE Completed");
           break;
         case EventType.EVALUATION_CHANGE:
-          String key = (evaluationMap as EvaluationResponse).evaluationId;
-          dynamic value = (evaluationMap as EvaluationResponse).evaluationValue;
-          parseEvaluationFlag(key, value);
+          String flag = (evaluationMap as EvaluationResponse).flag;
+          dynamic value = (evaluationMap as EvaluationResponse).value;
+          parseEvaluationFlag(flag, value);
           break;
         case EventType.EVALUATION_POLLING:
           List pollingResult = evaluationMap;
 
           pollingResult.forEach((element) {
-            String key = (element as EvaluationResponse).evaluationId;
-            dynamic value = (element as EvaluationResponse).evaluationValue;
-            parseEvaluationFlag(key, value);
+            String flag = (element as EvaluationResponse).flag;
+            dynamic value = (element as EvaluationResponse).value;
+            parseEvaluationFlag(flag, value);
           });
           break;
       }
