@@ -27,6 +27,7 @@ abstract class FeatureCard{
   bool hasRibbon;
   bool enabledDarkMode;
   bool isHelpEnabled;
+  bool isHelp;
 }
 
 class NeedHelp extends FeatureCard {
@@ -39,6 +40,7 @@ class NeedHelp extends FeatureCard {
     this.enabled            = false;
     this.available          = false;
     this.hasRibbon          = false;
+    this.isHelp             = true;
     this.isHelpEnabled      = false;
     this.featureType        = FeatureType.Help;
     this.enabledDarkMode    = false;
