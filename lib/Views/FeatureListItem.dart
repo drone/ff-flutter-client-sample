@@ -58,8 +58,12 @@ class _FeatureListItem extends State<FetureListItem> {
   @override
   Widget build(BuildContext context) {
     TextStyle style = TextStyle(color: card.enabledDarkMode ? Colors.white : Colors.black);
-    if (card.isHelpEnabled) {
-      return _NeedHelpView();
+    if (card.isHelp) {
+      if (card.isHelpEnabled) {
+        return _NeedHelpView();
+      } else {
+        return Container();
+      }
     }
     if (!card.available) {
       return Container(
