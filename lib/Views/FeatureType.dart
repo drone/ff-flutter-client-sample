@@ -82,6 +82,7 @@ class CDModule extends FeatureCard {
     this.hasRibbon          = false;
     this.enabledDarkMode    = false;
     this.isHelpEnabled      = false;
+    this.isHelp             = false;
   }
   @override
   void setDarkMode(bool value) {
@@ -112,15 +113,16 @@ class CDModule extends FeatureCard {
 class CVModule extends FeatureCard {
 
   CVModule() {
-    this.featureImageName      = "assets/images/cv.png";
-    this.featureType           = FeatureType.Verification;
-    this.featureDescription    = "Deploy in peace, verify activities that take place in the system. Identify risk early.";
-    this.featureTrialPeriod    = 0;
-    this.enabled               = false;
-    this.available             = false;
-    this.hasRibbon             = false;
-    this.enabledDarkMode       = false;
-    this.isHelpEnabled         = false;
+    this.featureImageName    = "assets/images/cv.png";
+    this.featureType         = FeatureType.Verification;
+    this.featureDescription  = "Deploy in peace, verify activities that take place in the system. Identify risk early.";
+    this.featureTrialPeriod  = 0;
+    this.enabled             = false;
+    this.available           = false;
+    this.hasRibbon           = false;
+    this.enabledDarkMode     = false;
+    this.isHelpEnabled       = false;
+    this.isHelp              = false;
   }
   @override
   void setDarkMode(bool value) {
@@ -161,6 +163,7 @@ class CIModule extends FeatureCard {
     this.hasRibbon          = false;
     this.enabledDarkMode    = false;
     this.isHelpEnabled      = false;
+    this.isHelp             = false;
   }
 
   @override
@@ -201,6 +204,7 @@ class CEModule extends FeatureCard {
     this.hasRibbon          = false;
     this.enabledDarkMode    = false;
     this.isHelpEnabled      = false;
+    this.isHelp             = false;
   }
 
   @override
@@ -239,6 +243,7 @@ class CFModule extends FeatureCard {
     this.hasRibbon          = false;
     this.enabledDarkMode    = false;
     this.isHelpEnabled      = false;
+    this.isHelp             = false;
   }
 
   @override
