@@ -1,16 +1,29 @@
-# ff_flutter_client_sample
+# Example App using Harness Flutter SDK (ff-flutter-client-sdk) for Demo purposes
 
-A new Flutter application.
+This Demo App will demonstrate the usage and capabilities of Flutter client SDK.
 
-## Getting Started
+### Setup
+To install SDK, add a dependency to project's `pubspec.yaml` file:
+```Dart
+ff_flutter_client_sdk: ^0.0.1
+```
 
-This project is a starting point for a Flutter application.
+Then, you may import package to your project
+```Dart
+import 'package:ff_flutter_client_sdk/CfClient.dart';
+```
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+### Accounts used:
+| No. | Account |
+| ---- | ---------- |
+| 1 | `Aptiv` |
+| 2 | `Experian` |
+| 3 | `Fiserv` |
+| 4 | `Harness` |
+| 5 | `Palo Alto Networks` |
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+During initialization, the target is one of the above accounts, selected from the list, on the first screen of the Demo App.
+
+ In order to change the account, you would need to go back to the initial screen and select a different account to use.
