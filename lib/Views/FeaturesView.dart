@@ -109,17 +109,6 @@ class _FeaturesGrid extends State<FeaturesGrid> {
           break;
       }
     });
-    parseEvaluationFlagFromCache("harnessappdemoenableglobalhelp");
-    parseEvaluationFlagFromCache("harnessappdemodarkmode");
-    parseEvaluationFlagFromCache("harnessappdemoenablecvmodule");
-    parseEvaluationFlagFromCache("harnessappdemoenablecimodule");
-    parseEvaluationFlagFromCache("harnessappdemoenablecfmodule");
-    parseEvaluationFlagFromCache("harnessappdemoenablecemodule");
-    parseEvaluationFlagFromCache("harnessappdemocfribbon");
-    parseEvaluationFlagFromCache("harnessappdemocvtriallimit");
-    parseEvaluationFlagFromCache("harnessappdemocitriallimit");
-    parseEvaluationFlagFromCache("harnessappdemocftriallimit");
-    parseEvaluationFlagFromCache("harnessappdemocetriallimit");
   }
 
   void _display(FeatureType featureType, bool value) {
