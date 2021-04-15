@@ -2,7 +2,7 @@
     package="io.harness.ff_flutter_client_sample">
    <application
         android:label="ff_flutter_client_sample"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/sample_icon">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
