@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="io.harness.ff_flutter_client_sample">
+    package="io.harness.fluttersample">
    <application
-        android:label="ff_flutter_client_sample"
+        android:label="FF Flutter Sample"
         android:icon="@mipmap/sample_icon">
         <activity
             android:name=".MainActivity"
