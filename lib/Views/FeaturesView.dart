@@ -3,13 +3,11 @@ import 'dart:ui';
 import 'FeatureListItem.dart';
 import 'FeatureType.dart';
 import 'package:ff_flutter_client_sdk/CfClient.dart';
-
-
+import 'package:sticky_headers/sticky_headers.dart';
 // ignore: must_be_immutable
 class FeatureView extends StatelessWidget {
 
   String title;
-
   FeatureView(this.title);
 
   @override
@@ -30,13 +28,12 @@ class FeatureView extends StatelessWidget {
   }
 
   _destroyTapped(BuildContext context) {
-      CfClient.destroy();
-      Navigator.pop(context);
+    CfClient.destroy();
+    Navigator.pop(context);
   }
 }
 
 class FeaturesGrid extends StatefulWidget {
-
   FeaturesGrid({Key key}) : super(key: key);
 
   @override
@@ -44,34 +41,66 @@ class FeaturesGrid extends StatefulWidget {
 }
 
 class _FeaturesGrid extends State<FeaturesGrid> {
-
   List<FeatureCard> features = [CDModule(),NeedHelp(),CVModule(), CIModule(), CEModule(), CFModule()];
+  List<String> listHeader = [
+    'Enabled Modules',
+    'Enable More Modules',
+  ];
 
   bool  _enabledDarkMode = false;
   Function _eventListener;
-
 
   @override
   Widget build(BuildContext context) {
     return  Container(
       color: _enabledDarkMode ? Colors.black : Colors.white,
-      child: GridView.count(
-        crossAxisCount: 2,
-        childAspectRatio: 0.65,
-        children: List.generate(features.length, (index) {
-          return SizedBox(height: double.infinity,
-            child: Padding(padding: EdgeInsets.all(0),
-              child: FetureListItem(card: features[index])),
-          );
-        }),
-      ),
-    );
+      child: new ListView.builder(
+    itemCount: listHeader.length, itemBuilder: (context, index) {
+      return new StickyHeader(
+        header: new Container(
+          height: 38.0,
+          color: Colors.white,
+          padding: new EdgeInsets.symmetric(horizontal: 12.0),
+          alignment: Alignment.centerLeft,
+          child: new Text(listHeader[index],
+            style: const TextStyle(color: Colors.black,
+                fontSize: 20,
+                fontWeight: FontWeight.bold),
+          ),
+        ),
+        content: Container(
+          child: GridView.builder(
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            itemCount: getListForIndex(index).length,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              childAspectRatio: 0.66,
+            ),
+            itemBuilder: (contxt, indx) {
+              print('Indx for grid in row $indx');
+              return SizedBox(height: double.infinity,
+                  child: FetureListItem(card: getListForIndex(index)[indx]));
+            }
+            )
+        )
+      );
+    },
+      shrinkWrap: true,
+    ));
   }
 
+  List getListForIndex(index)  {
+    print('printing index of grid $index');
+    if (index == 0) {
+      return features.sublist(0,2).toList();
+    }else {
+      return features.sublist(2).toList();
+    }
+  }
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _registerForEvents();
   }
@@ -109,17 +138,6 @@ class _FeaturesGrid extends State<FeaturesGrid> {
           break;
       }
     });
-    parseEvaluationFlagFromCache("harnessappdemoenableglobalhelp");
-    parseEvaluationFlagFromCache("harnessappdemodarkmode");
-    parseEvaluationFlagFromCache("harnessappdemoenablecvmodule");
-    parseEvaluationFlagFromCache("harnessappdemoenablecimodule");
-    parseEvaluationFlagFromCache("harnessappdemoenablecfmodule");
-    parseEvaluationFlagFromCache("harnessappdemoenablecemodule");
-    parseEvaluationFlagFromCache("harnessappdemocfribbon");
-    parseEvaluationFlagFromCache("harnessappdemocvtriallimit");
-    parseEvaluationFlagFromCache("harnessappdemocitriallimit");
-    parseEvaluationFlagFromCache("harnessappdemocftriallimit");
-    parseEvaluationFlagFromCache("harnessappdemocetriallimit");
   }
 
   void _display(FeatureType featureType, bool value) {
@@ -129,30 +147,30 @@ class _FeaturesGrid extends State<FeaturesGrid> {
     features.forEach((element) { if (element.featureType == featureType) { element.featureTrialPeriod = value; }});
   }
 
-        void parseEvaluationFlagFromCache(String flag) {
-      switch (flag) {
-        case "harnessappdemoenableglobalhelp":
-        case "harnessappdemoenablecvmodule":
-        case "harnessappdemoenablecimodule":
-        case "harnessappdemoenablecfmodule":
-        case "harnessappdemoenablecemodule":
-        case "harnessappdemodarkmode":
-        case "harnessappdemocfribbon":
-          fetchBooleansFromCache(flag);
-          break;
-        case "harnessappdemocvtriallimit":
-        case "harnessappdemocitriallimit":
-        case "harnessappdemocftriallimit":
-        case "harnessappdemocetriallimit":
-          fetchNumbersFromCache(flag);
-          break;
-        case "testmultivar_flag":
-          break;
-        case "test0223":
-          break;
-        default: break;
-      }
+  void parseEvaluationFlagFromCache(String flag) {
+    switch (flag) {
+      case "harnessappdemoenableglobalhelp":
+      case "harnessappdemoenablecvmodule":
+      case "harnessappdemoenablecimodule":
+      case "harnessappdemoenablecfmodule":
+      case "harnessappdemoenablecemodule":
+      case "harnessappdemodarkmode":
+      case "harnessappdemocfribbon":
+        fetchBooleansFromCache(flag);
+        break;
+      case "harnessappdemocvtriallimit":
+      case "harnessappdemocitriallimit":
+      case "harnessappdemocftriallimit":
+      case "harnessappdemocetriallimit":
+        fetchNumbersFromCache(flag);
+        break;
+      case "testmultivar_flag":
+        break;
+      case "test0223":
+        break;
+      default: break;
     }
+  }
 
   void fetchBooleansFromCache(String flag) {
     switch (flag) {
@@ -216,139 +234,140 @@ class _FeaturesGrid extends State<FeaturesGrid> {
     }
   }
 
-    void fetchNumbersFromCache(String flag) {
-      switch (flag) {
-        case "harnessappdemocvtriallimit":
-          CfClient.numberVariation(flag, 0.0).then((value) {
-            setState(() {
-              print("CACHE: CV Trial => $value");
-              _limit(FeatureType.Verification, value.toInt());
-            });
+  void fetchNumbersFromCache(String flag) {
+    switch (flag) {
+      case "harnessappdemocvtriallimit":
+        CfClient.numberVariation(flag, 0.0).then((value) {
+          setState(() {
+            print("CACHE: CV Trial => $value");
+            _limit(FeatureType.Verification, value.toInt());
           });
-          break;
-        case "harnessappdemocitriallimit":
-          CfClient.numberVariation(flag, 0.0).then((value) {
-            setState(() {
-              print("CACHE: CI Trial => $value");
-              _limit(FeatureType.Integration, value.toInt());
-            });
+        });
+        break;
+      case "harnessappdemocitriallimit":
+        CfClient.numberVariation(flag, 0.0).then((value) {
+          setState(() {
+            print("CACHE: CI Trial => $value");
+            _limit(FeatureType.Integration, value.toInt());
           });
-          break;
-        case "harnessappdemocftriallimit":
-          CfClient.numberVariation(flag, 0.0).then((value) {
-            setState(() {
-              print("CACHE: CF Trial => $value");
-              _limit(FeatureType.Features, value.toInt());
-            });
+        });
+        break;
+      case "harnessappdemocftriallimit":
+        CfClient.numberVariation(flag, 0.0).then((value) {
+          setState(() {
+            print("CACHE: CF Trial => $value");
+            _limit(FeatureType.Features, value.toInt());
           });
-          break;
-        case "harnessappdemocetriallimit":
-          CfClient.numberVariation(flag, 0.0).then((value) {
-            setState(() {
-              print("CACHE: CE Trial => $value");
-              _limit(FeatureType.Efficiency, value.toInt());
-            });
+        });
+        break;
+      case "harnessappdemocetriallimit":
+        CfClient.numberVariation(flag, 0.0).then((value) {
+          setState(() {
+            print("CACHE: CE Trial => $value");
+            _limit(FeatureType.Efficiency, value.toInt());
           });
-          break;
-      }
+        });
+        break;
     }
+  }
 
-    void parseEvaluationFlag(String flag, dynamic value) {
-      if (value is String) {
-        List components = value.split(":");
-        if (components.length > 1) {
-        } else {
-          processStrings(flag, value);
-        }
-      } else if (value is bool) {
-        processBooleans(flag, value);
-      } else if (value is int) {
-        processNumbers(flag, value);
-      } else if (value is double) {
-        processNumbers(flag, value.toInt());
+  void parseEvaluationFlag(String flag, dynamic value) {
+    if (value is String) {
+      List components = value.split(":");
+      if (components.length > 1) {
+        //process json
+      } else {
+        processStrings(flag, value);
       }
+    } else if (value is bool) {
+      processBooleans(flag, value);
+    } else if (value is int) {
+      processNumbers(flag, value);
+    } else if (value is double) {
+      processNumbers(flag, value.toInt());
     }
+  }
 
-    void processStrings(String flag, String value) {
-      setState(() {
-        print("Set Some String => $value");
-      });
-    }
+  void processStrings(String flag, String value) {
+    setState(() {
+      print("Set Some String => $value");
+    });
+  }
 
-    void processBooleans(String flag, bool value) {
-      switch (flag) {
-        case "harnessappdemoenableglobalhelp":
-          setState(() {
-            features.forEach((element) { if (element.featureType == FeatureType.Help) { element.isHelpEnabled = value; }});
-            print("Set Global Help => $value");
-          });
-          break;
-        case "harnessappdemoenablecvmodule":
-          setState(() {
-            print("Set CV Module => $value");
-            _display(FeatureType.Verification, value);
-          });
-          break;
-        case "harnessappdemoenablecimodule":
-          setState(() {
-            print("Set CI Module => $value");
-            _display(FeatureType.Integration, value);
-          });
-          break;
-        case "harnessappdemoenablecfmodule":
-          setState(() {
-            print("Set CF Module => $value");
-            _display(FeatureType.Features, value);
-          });
-          break;
-        case "harnessappdemoenablecemodule":
-          setState(() {
-            print("Set CE Module => $value");
-            _display(FeatureType.Efficiency, value);
-          });
-          break;
-        case "harnessappdemodarkmode":
-          setState(() {
-            print("Set Dark Mode => $value");
-            features.forEach((element) { element.setDarkMode(value); });
-            _enabledDarkMode = value;
-          });
-          break;
-        case "harnessappdemocfribbon":
-          setState(() {
-            features.forEach((element) { if (element.featureType == FeatureType.Features) { element.setRibbon(value); }});
-            print("Set CF Ribbon => $value");
-          });
-          break;
-      }
+  void processBooleans(String flag, bool value) {
+    switch (flag) {
+      case "harnessappdemoenableglobalhelp":
+        setState(() {
+          features.forEach((element) { if (element.featureType == FeatureType.Help) { element.isHelpEnabled = value; }});
+          print("Set Global Help => $value");
+        });
+        break;
+      case "harnessappdemoenablecvmodule":
+        setState(() {
+          print("Set CV Module => $value");
+          _display(FeatureType.Verification, value);
+        });
+        break;
+      case "harnessappdemoenablecimodule":
+        setState(() {
+          print("Set CI Module => $value");
+          _display(FeatureType.Integration, value);
+        });
+        break;
+      case "harnessappdemoenablecfmodule":
+        setState(() {
+          print("Set CF Module => $value");
+          _display(FeatureType.Features, value);
+        });
+        break;
+      case "harnessappdemoenablecemodule":
+        setState(() {
+          print("Set CE Module => $value");
+          _display(FeatureType.Efficiency, value);
+        });
+        break;
+      case "harnessappdemodarkmode":
+        setState(() {
+          print("Set Dark Mode => $value");
+          features.forEach((element) { element.setDarkMode(value); });
+          _enabledDarkMode = value;
+        });
+        break;
+      case "harnessappdemocfribbon":
+        setState(() {
+          features.forEach((element) { if (element.featureType == FeatureType.Features) { element.setRibbon(value); }});
+          print("Set CF Ribbon => $value");
+        });
+        break;
     }
+  }
 
-    void processNumbers(String flag, int value) {
-      switch (flag) {
-        case "harnessappdemocvtriallimit":
-          setState(() {
-            print("Set CV Trial => $value");
-            _limit(FeatureType.Verification, value);
-          });
-          break;
-        case "harnessappdemocitriallimit":
-          setState(() {
-            print("Set CI Trial => $value");
-            _limit(FeatureType.Integration, value);
-          });
-          break;
-        case "harnessappdemocftriallimit":
-          setState(() {
-            print("Set CF Trial => $value");
-            _limit(FeatureType.Features, value);
-          });
-          break;
-        case "harnessappdemocetriallimit":
-          setState(() {
-            _limit(FeatureType.Efficiency, value);
-            print("Set CE Trial => $value");
-          });
-          break;
-      }
+  void processNumbers(String flag, int value) {
+    switch (flag) {
+      case "harnessappdemocvtriallimit":
+        setState(() {
+          print("Set CV Trial => $value");
+          _limit(FeatureType.Verification, value);
+        });
+        break;
+      case "harnessappdemocitriallimit":
+        setState(() {
+          print("Set CI Trial => $value");
+          _limit(FeatureType.Integration, value);
+        });
+        break;
+      case "harnessappdemocftriallimit":
+        setState(() {
+          print("Set CF Trial => $value");
+          _limit(FeatureType.Features, value);
+        });
+        break;
+      case "harnessappdemocetriallimit":
+        setState(() {
+          _limit(FeatureType.Efficiency, value);
+          print("Set CE Trial => $value");
+        });
+        break;
     }
- }
+  }
+}
