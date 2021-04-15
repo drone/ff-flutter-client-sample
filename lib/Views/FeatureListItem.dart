@@ -8,31 +8,31 @@ class _NeedHelpView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-
-        child: Stack(
-          children:[
-            Positioned(
-                top:  100 ,
-                right: -50,
-                child:
-            Transform.rotate(
-      angle:  -pi/2,
-      child: Container(
-          decoration: BoxDecoration(
-              color: Colors.green,
-              border: Border.all(color: Colors.white,
+      child: Stack(
+        children:[
+          Positioned(
+            top:  100,
+            right: -50,
+            child: Transform.rotate(
+              angle:  -pi/2,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.green,
+                  border: Border.all(color: Colors.white),
+                  borderRadius: BorderRadius.all(Radius.circular(20))
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(15.0),
+                    child: 
+                      Text("Need help ? 👋",
+                        style: TextStyle(color: Colors.white, fontSize: 22.0)
+                      ),
+                ),
               ),
-              borderRadius: BorderRadius.all(Radius.circular(20)
-              )
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: Text("Need help ? 👋",
-                style: TextStyle(color: Colors.white, fontSize: 22.0)),
-          ),
-      ),
-    ))
-            ])
+            )
+          )
+        ]
+      )
     );
   }
 }
@@ -47,19 +47,20 @@ class FetureListItem extends StatefulWidget {
   _FeatureListItem createState() => _FeatureListItem(this.card);
 
 }
-
 class _FeatureListItem extends State<FetureListItem> {
 
   FeatureCard card;
-
   _FeatureListItem(this.card);
-
 
   @override
   Widget build(BuildContext context) {
     TextStyle style = TextStyle(color: card.enabledDarkMode ? Colors.white : Colors.black);
-    if (card.isHelpEnabled) {
-      return _NeedHelpView();
+    if (card.isHelp) {
+      if (card.isHelpEnabled) {
+        return _NeedHelpView();
+      } else {
+        return Container();
+      }
     }
     if (!card.available) {
       return Container(

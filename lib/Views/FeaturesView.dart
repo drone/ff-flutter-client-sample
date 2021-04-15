@@ -98,7 +98,6 @@ class _FeaturesGrid extends State<FeaturesGrid> {
       return features.sublist(2).toList();
     }
   }
-
   @override
   void initState() {
     super.initState();
