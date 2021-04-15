@@ -78,9 +78,10 @@ class _FeatureListItem extends State<FetureListItem> {
                         .of(context)
                         .size
                         .width,
-                    height: 100,
+                    height: 80,
                     decoration: BoxDecoration(
                       image: DecorationImage(
+                        alignment: Alignment.topCenter,
                           fit: BoxFit.fitWidth,
                           image: AssetImage(card.featureImageName)
                       ),
