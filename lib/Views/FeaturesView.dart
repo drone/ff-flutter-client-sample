@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'FeatureListItem.dart';
 import 'FeatureType.dart';
 import 'package:ff_flutter_client_sdk/CfClient.dart';
+import 'package:sticky_headers/sticky_headers.dart';
 // ignore: must_be_immutable
 class FeatureView extends StatelessWidget {
 
@@ -41,6 +42,10 @@ class FeaturesGrid extends StatefulWidget {
 
 class _FeaturesGrid extends State<FeaturesGrid> {
   List<FeatureCard> features = [CDModule(),NeedHelp(),CVModule(), CIModule(), CEModule(), CFModule()];
+  List<String> listHeader = [
+    'Enabled Modules',
+    'Enable More Modules',
+  ];
 
   bool  _enabledDarkMode = false;
   Function _eventListener;
@@ -49,19 +54,48 @@ class _FeaturesGrid extends State<FeaturesGrid> {
   Widget build(BuildContext context) {
     return  Container(
       color: _enabledDarkMode ? Colors.black : Colors.white,
-      child: GridView.count(
-        crossAxisCount: 2,
-        childAspectRatio: 0.65,
-        children: List.generate(features.length, (index) {
-          return SizedBox(height: double.infinity,
-            child: Padding(padding: EdgeInsets.all(0),
-              child: FetureListItem(card: features[index])),
-          );
-        }),
-      ),
-    );
+      child: new ListView.builder(
+    itemCount: listHeader.length, itemBuilder: (context, index) {
+      return new StickyHeader(
+        header: new Container(
+          height: 38.0,
+          color: Colors.white,
+          padding: new EdgeInsets.symmetric(horizontal: 12.0),
+          alignment: Alignment.centerLeft,
+          child: new Text(listHeader[index],
+            style: const TextStyle(color: Colors.black,
+                fontSize: 20,
+                fontWeight: FontWeight.bold),
+          ),
+        ),
+        content: Container(
+          child: GridView.builder(
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            itemCount: getListForIndex(index).length,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              childAspectRatio: 0.66,
+            ),
+            itemBuilder: (contxt, indx) {
+              return SizedBox(height: double.infinity,
+                  child: FetureListItem(card: getListForIndex(index)[indx]));
+            }
+            )
+        )
+      );
+    },
+      shrinkWrap: true,
+    ));
   }
 
+  List getListForIndex(index)  {
+    if (index == 0) {
+      return features.sublist(0,2).toList();
+    }else {
+      return features.sublist(2).toList();
+    }
+  }
   @override
   void initState() {
     super.initState();
@@ -140,7 +174,6 @@ class _FeaturesGrid extends State<FeaturesGrid> {
       case "harnessappdemoenableglobalhelp":
         CfClient.boolVariation(flag, false).then((value) {
           setState(() {
-            print("CACHE: Global Help => $value");
             features.forEach((element) { if (element.featureType == FeatureType.Help) { element.isHelpEnabled = value; }});
           });
         });
@@ -148,7 +181,6 @@ class _FeaturesGrid extends State<FeaturesGrid> {
       case "harnessappdemoenablecvmodule":
         CfClient.boolVariation(flag, false).then((value) {
           setState(() {
-            print("CACHE: CV Module => $value");
             _display(FeatureType.Verification, value);
           });
         });
@@ -156,7 +188,6 @@ class _FeaturesGrid extends State<FeaturesGrid> {
       case "harnessappdemoenablecimodule":
         CfClient.boolVariation(flag, false).then((value) {
           setState(() {
-            print("CACHE: CI Module => $value");
             _display(FeatureType.Integration, value);
           });
         });
@@ -164,7 +195,6 @@ class _FeaturesGrid extends State<FeaturesGrid> {
       case "harnessappdemoenablecfmodule":
         CfClient.boolVariation(flag, false).then((value) {
           setState(() {
-            print("CACHE: CF Module => $value");
             _display(FeatureType.Features, value);
           });
         });
@@ -172,7 +202,6 @@ class _FeaturesGrid extends State<FeaturesGrid> {
       case "harnessappdemoenablecemodule":
         CfClient.boolVariation(flag, false).then((value) {
           setState(() {
-            print("CACHE: CE Module => $value");
             _display(FeatureType.Efficiency, value);
           });
         });
@@ -180,7 +209,6 @@ class _FeaturesGrid extends State<FeaturesGrid> {
       case "harnessappdemodarkmode":
         CfClient.boolVariation(flag, false).then((value) {
           setState(() {
-            print("CACHE: Dark Mode => $value");
             features.forEach((element) { element.setDarkMode(value); });
             _enabledDarkMode = value;
           });
@@ -189,7 +217,6 @@ class _FeaturesGrid extends State<FeaturesGrid> {
       case "harnessappdemocfribbon":
         CfClient.boolVariation(flag, false).then((value) {
           setState(() {
-            print("CACHE: CF Ribbon => $value");
             features.forEach((element) { if (element.featureType == FeatureType.Features) { element.setRibbon(value); }});
           });
         });
@@ -202,7 +229,6 @@ class _FeaturesGrid extends State<FeaturesGrid> {
       case "harnessappdemocvtriallimit":
         CfClient.numberVariation(flag, 0.0).then((value) {
           setState(() {
-            print("CACHE: CV Trial => $value");
             _limit(FeatureType.Verification, value.toInt());
           });
         });
@@ -210,7 +236,6 @@ class _FeaturesGrid extends State<FeaturesGrid> {
       case "harnessappdemocitriallimit":
         CfClient.numberVariation(flag, 0.0).then((value) {
           setState(() {
-            print("CACHE: CI Trial => $value");
             _limit(FeatureType.Integration, value.toInt());
           });
         });
@@ -218,7 +243,6 @@ class _FeaturesGrid extends State<FeaturesGrid> {
       case "harnessappdemocftriallimit":
         CfClient.numberVariation(flag, 0.0).then((value) {
           setState(() {
-            print("CACHE: CF Trial => $value");
             _limit(FeatureType.Features, value.toInt());
           });
         });
@@ -226,7 +250,6 @@ class _FeaturesGrid extends State<FeaturesGrid> {
       case "harnessappdemocetriallimit":
         CfClient.numberVariation(flag, 0.0).then((value) {
           setState(() {
-            print("CACHE: CE Trial => $value");
             _limit(FeatureType.Efficiency, value.toInt());
           });
         });
@@ -239,8 +262,6 @@ class _FeaturesGrid extends State<FeaturesGrid> {
       List components = value.split(":");
       if (components.length > 1) {
         //process json
-      } else {
-        processStrings(flag, value);
       }
     } else if (value is bool) {
       processBooleans(flag, value);
@@ -251,47 +272,35 @@ class _FeaturesGrid extends State<FeaturesGrid> {
     }
   }
 
-  void processStrings(String flag, String value) {
-    setState(() {
-      print("Set Some String => $value");
-    });
-  }
-
   void processBooleans(String flag, bool value) {
     switch (flag) {
       case "harnessappdemoenableglobalhelp":
         setState(() {
           features.forEach((element) { if (element.featureType == FeatureType.Help) { element.isHelpEnabled = value; }});
-          print("Set Global Help => $value");
         });
         break;
       case "harnessappdemoenablecvmodule":
         setState(() {
-          print("Set CV Module => $value");
           _display(FeatureType.Verification, value);
         });
         break;
       case "harnessappdemoenablecimodule":
         setState(() {
-          print("Set CI Module => $value");
           _display(FeatureType.Integration, value);
         });
         break;
       case "harnessappdemoenablecfmodule":
         setState(() {
-          print("Set CF Module => $value");
           _display(FeatureType.Features, value);
         });
         break;
       case "harnessappdemoenablecemodule":
         setState(() {
-          print("Set CE Module => $value");
           _display(FeatureType.Efficiency, value);
         });
         break;
       case "harnessappdemodarkmode":
         setState(() {
-          print("Set Dark Mode => $value");
           features.forEach((element) { element.setDarkMode(value); });
           _enabledDarkMode = value;
         });
@@ -299,7 +308,6 @@ class _FeaturesGrid extends State<FeaturesGrid> {
       case "harnessappdemocfribbon":
         setState(() {
           features.forEach((element) { if (element.featureType == FeatureType.Features) { element.setRibbon(value); }});
-          print("Set CF Ribbon => $value");
         });
         break;
     }
@@ -309,26 +317,22 @@ class _FeaturesGrid extends State<FeaturesGrid> {
     switch (flag) {
       case "harnessappdemocvtriallimit":
         setState(() {
-          print("Set CV Trial => $value");
           _limit(FeatureType.Verification, value);
         });
         break;
       case "harnessappdemocitriallimit":
         setState(() {
-          print("Set CI Trial => $value");
           _limit(FeatureType.Integration, value);
         });
         break;
       case "harnessappdemocftriallimit":
         setState(() {
-          print("Set CF Trial => $value");
           _limit(FeatureType.Features, value);
         });
         break;
       case "harnessappdemocetriallimit":
         setState(() {
           _limit(FeatureType.Efficiency, value);
-          print("Set CE Trial => $value");
         });
         break;
     }
