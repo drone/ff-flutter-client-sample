@@ -78,7 +78,6 @@ class _FeaturesGrid extends State<FeaturesGrid> {
               childAspectRatio: 0.66,
             ),
             itemBuilder: (contxt, indx) {
-              print('Indx for grid in row $indx');
               return SizedBox(height: double.infinity,
                   child: FetureListItem(card: getListForIndex(index)[indx]));
             }
@@ -91,7 +90,6 @@ class _FeaturesGrid extends State<FeaturesGrid> {
   }
 
   List getListForIndex(index)  {
-    print('printing index of grid $index');
     if (index == 0) {
       return features.sublist(0,2).toList();
     }else {
