@@ -100,6 +100,17 @@ class _FeaturesGrid extends State<FeaturesGrid> {
   void initState() {
     super.initState();
     _registerForEvents();
+    parseEvaluationFlagFromCache("harnessappdemoenableglobalhelp");
+    parseEvaluationFlagFromCache("harnessappdemoenablecvmodule");
+    parseEvaluationFlagFromCache("harnessappdemoenablecimodule");
+    parseEvaluationFlagFromCache("harnessappdemoenablecfmodule");
+    parseEvaluationFlagFromCache("harnessappdemoenablecemodule");
+    parseEvaluationFlagFromCache("harnessappdemodarkmode");
+    parseEvaluationFlagFromCache("harnessappdemocfribbon");
+    parseEvaluationFlagFromCache("harnessappdemocvtriallimit");
+    parseEvaluationFlagFromCache("harnessappdemocitriallimit");
+    parseEvaluationFlagFromCache("harnessappdemocftriallimit");
+    parseEvaluationFlagFromCache("harnessappdemocetriallimit");
   }
 
   @override
