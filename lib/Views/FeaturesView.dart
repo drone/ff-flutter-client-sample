@@ -114,8 +114,10 @@ class _FeaturesGrid extends State<FeaturesGrid> {
       _eventListener = (evaluationMap, eventType){};
       switch (eventType) {
         case EventType.SSE_START:
+          print("Started SSE");
           break;
         case EventType.SSE_END:
+          print("SSE Completed");
           break;
         case EventType.EVALUATION_CHANGE:
           String flag = (evaluationMap as EvaluationResponse).flag;
