@@ -1,4 +1,4 @@
-package io.harness.ff_flutter_client_sample
+package io.harness.fluttersample
 
 import io.flutter.embedding.android.FlutterActivity
 
