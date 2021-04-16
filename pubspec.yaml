@@ -31,11 +31,8 @@ dependencies:
   cupertino_icons: ^1.0.2
 
 dev_dependencies:
-
-
   sticky_headers: ^0.1.7
-  ff_flutter_client_sdk:
-    git: 'https://github.com/tanovicstef92/ff-flutter-client-sdk.git'
+  ff_flutter_client_sdk: ^0.0.1
   flutter_test:
     sdk: flutter
 
