@@ -24,7 +24,11 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  ff_flutter_client_sdk: ^0.0.1
+  ff_flutter_client_sdk: ^0.0.2
+
+  # Uncomment this for local development:
+  #  ff_flutter_client_sdk:
+  #    path: /Users/milosvasic/Projects/ff-flutter-client-sdk
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

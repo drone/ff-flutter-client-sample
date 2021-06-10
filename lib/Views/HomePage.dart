@@ -18,7 +18,7 @@
 
   class _HomePageState extends State<HomePage> {
 
-    static const String apiKey = "5d59cb10-66cb-405b-ab54-b4d48132f383";
+    static const String apiKey = "YOUR_API_KEY";
 
 
     @override
@@ -292,11 +292,18 @@
     }
 
     Future<bool> selectedAccount(String name) async {
+
       var conf = CfConfigurationBuilder()
           .setStreamEnabled(true)
           .setPollingInterval(60)
           .build();
+
       var target = CfTargetBuilder().setIdentifier(name).build();
+
+      CfClient.registerEventsListener((data, eventType) {
+
+          print("Event: " + eventType.toString());
+      });
 
       var res = await CfClient.initialize(apiKey, conf, target);
       return res.success;
