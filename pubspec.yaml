@@ -24,7 +24,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  ff_flutter_client_sdk: ^0.0.2
+  ff_flutter_client_sdk: ^1.0.0
 
   # Uncomment this for local development:
   #  ff_flutter_client_sdk:
