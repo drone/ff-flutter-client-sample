@@ -1,6 +1,6 @@
 PODS:
-  - ff-ios-client-sdk (0.0.5)
-  - ff_flutter_client_sdk (0.0.6):
+  - ff-ios-client-sdk (1.0.2)
+  - ff_flutter_client_sdk (1.0.1):
     - ff-ios-client-sdk
     - Flutter
   - Flutter (1.0.0)
@@ -20,8 +20,8 @@ EXTERNAL SOURCES:
     :path: Flutter
 
 SPEC CHECKSUMS:
-  ff-ios-client-sdk: 3cfc18afcaa944ce6c60efb62899a69e63994fdb
-  ff_flutter_client_sdk: 763a93a4be2baf17e25bc344963b2d3e6d14d5a7
+  ff-ios-client-sdk: d5211d5d85485e67fa32e51dd09931998c04c6b9
+  ff_flutter_client_sdk: 94066a9ed431ac947de4a9a6169409403f3a311e
   Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
 
 PODFILE CHECKSUM: fe0e1ee7f3d1f7d00b11b474b62dd62134535aea
