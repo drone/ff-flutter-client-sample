@@ -1,3 +1,9 @@
+# Before You Begin
+Harness Feature Flags (FF) is a feature management solution that enables users to change the software’s functionality, without deploying new code. FF uses feature flags to hide code or behaviors without having to ship new versions of the software. A feature flag is like a powerful if statement.
+
+For more information, see https://harness.io/blog/introducing-harness-feature-flags/
+
+
 # Example App using Harness Flutter SDK (ff-flutter-client-sdk) for Demo purposes
 
 This Demo App will demonstrate the usage and capabilities of Flutter client SDK.
