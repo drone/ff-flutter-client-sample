@@ -28,7 +28,7 @@ class FeatureView extends StatelessWidget {
   }
 
   _destroyTapped(BuildContext context) {
-    CfClient.destroy();
+    CfClient.getInstance().destroy();
     Navigator.pop(context);
   }
 }
@@ -116,12 +116,12 @@ class _FeaturesGrid extends State<FeaturesGrid> {
   @override
   void dispose() {
     super.dispose();
-    CfClient.unregisterEventsListener(_eventListener);
-    CfClient.destroy();
+    CfClient.getInstance().unregisterEventsListener(_eventListener);
+    CfClient.getInstance().destroy();
   }
 
   _registerForEvents() {
-    CfClient.registerEventsListener((evaluationMap, eventType) {
+    CfClient.getInstance().registerEventsListener((evaluationMap, eventType) {
       _eventListener = (evaluationMap, eventType){};
       switch (eventType) {
         case EventType.SSE_START:
@@ -183,42 +183,42 @@ class _FeaturesGrid extends State<FeaturesGrid> {
   void fetchBooleansFromCache(String flag) {
     switch (flag) {
       case "harnessappdemoenableglobalhelp":
-        CfClient.boolVariation(flag, false).then((value) {
+        CfClient.getInstance().boolVariation(flag, false).then((value) {
           setState(() {
             features.forEach((element) { if (element.featureType == FeatureType.Help) { element.isHelpEnabled = value; }});
           });
         });
         break;
       case "harnessappdemoenablecvmodule":
-        CfClient.boolVariation(flag, false).then((value) {
+        CfClient.getInstance().boolVariation(flag, false).then((value) {
           setState(() {
             _display(FeatureType.Verification, value);
           });
         });
         break;
       case "harnessappdemoenablecimodule":
-        CfClient.boolVariation(flag, false).then((value) {
+        CfClient.getInstance().boolVariation(flag, false).then((value) {
           setState(() {
             _display(FeatureType.Integration, value);
           });
         });
         break;
       case "harnessappdemoenablecfmodule":
-        CfClient.boolVariation(flag, false).then((value) {
+        CfClient.getInstance().boolVariation(flag, false).then((value) {
           setState(() {
             _display(FeatureType.Features, value);
           });
         });
         break;
       case "harnessappdemoenablecemodule":
-        CfClient.boolVariation(flag, false).then((value) {
+        CfClient.getInstance().boolVariation(flag, false).then((value) {
           setState(() {
             _display(FeatureType.Efficiency, value);
           });
         });
         break;
       case "harnessappdemodarkmode":
-        CfClient.boolVariation(flag, false).then((value) {
+        CfClient.getInstance().boolVariation(flag, false).then((value) {
           setState(() {
             features.forEach((element) { element.setDarkMode(value); });
             _enabledDarkMode = value;
@@ -226,7 +226,7 @@ class _FeaturesGrid extends State<FeaturesGrid> {
         });
         break;
       case "harnessappdemocfribbon":
-        CfClient.boolVariation(flag, false).then((value) {
+        CfClient.getInstance().boolVariation(flag, false).then((value) {
           setState(() {
             features.forEach((element) { if (element.featureType == FeatureType.Features) { element.setRibbon(value); }});
           });
@@ -238,28 +238,28 @@ class _FeaturesGrid extends State<FeaturesGrid> {
   void fetchNumbersFromCache(String flag) {
     switch (flag) {
       case "harnessappdemocvtriallimit":
-        CfClient.numberVariation(flag, 0.0).then((value) {
+        CfClient.getInstance().numberVariation(flag, 0.0).then((value) {
           setState(() {
             _limit(FeatureType.Verification, value.toInt());
           });
         });
         break;
       case "harnessappdemocitriallimit":
-        CfClient.numberVariation(flag, 0.0).then((value) {
+        CfClient.getInstance().numberVariation(flag, 0.0).then((value) {
           setState(() {
             _limit(FeatureType.Integration, value.toInt());
           });
         });
         break;
       case "harnessappdemocftriallimit":
-        CfClient.numberVariation(flag, 0.0).then((value) {
+        CfClient.getInstance().numberVariation(flag, 0.0).then((value) {
           setState(() {
             _limit(FeatureType.Features, value.toInt());
           });
         });
         break;
       case "harnessappdemocetriallimit":
-        CfClient.numberVariation(flag, 0.0).then((value) {
+        CfClient.getInstance().numberVariation(flag, 0.0).then((value) {
           setState(() {
             _limit(FeatureType.Efficiency, value.toInt());
           });

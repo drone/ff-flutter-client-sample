@@ -282,11 +282,11 @@ class _HomePageState extends State<HomePage> {
 
     var target = CfTargetBuilder().setIdentifier(name).build();
 
-    CfClient.registerEventsListener((data, eventType) {
+    CfClient.getInstance().registerEventsListener((data, eventType) {
       print("Event: " + eventType.toString());
     });
 
-    var res = await CfClient.initialize(apiKey, conf, target);
+    var res = await CfClient.getInstance().initialize(apiKey, conf, target);
     return res.success;
   }
 
