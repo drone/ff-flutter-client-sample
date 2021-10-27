@@ -16,7 +16,7 @@ This Demo App will demonstrate the usage and capabilities of Flutter client SDK.
 To install SDK, add a dependency to project's `pubspec.yaml` file:
 
 ```
-ff_flutter_client_sdk: ^1.0.1
+ff_flutter_client_sdk: ^1.0.2
 ```
 
 Then, you may import package to your project
