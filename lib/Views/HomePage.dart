@@ -272,12 +272,11 @@ class _HomePageState extends State<HomePage> {
   Future<bool> selectedAccount(String name) async {
     var conf = CfConfigurationBuilder()
         .setStreamEnabled(true)
-        .setPollingInterval(60)
+        .setAnalyticsEnabled(true)
         // .setConfigUri("https://config.feature-flags.uat.harness.io/api/1.0")
         // .setStreamUrl(
         //     "https://config.feature-flags.uat.harness.io/api/1.0/stream")
         // .setEventUrl("https://event.feature-flags.uat.harness.io/api/1.0")
-        // .setAnalyticsEnabled(true)
         .build();
 
     var target = CfTargetBuilder().setIdentifier(name).build();
